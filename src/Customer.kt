@@ -1,5 +1,5 @@
 import java.text.DecimalFormat
-
+// Base customer class for formatting user info
 open class Customer (customerName: String,
                      customerPhone: String,
                      customerAddress: String,
@@ -17,6 +17,7 @@ open class Customer (customerName: String,
     }
 }
 
+// Residential class for adding on to customer class
 class Residential(seniorStatus: Int,
                   customerName: String,
                   customerPhone: String,
@@ -31,9 +32,11 @@ class Residential(seniorStatus: Int,
 
 }
 
+// Function to calculate weekly cost to mow their lawn based on square footage
 fun residentialWork(user: Residential) {
     val roundTwoDigits = DecimalFormat ("$###,###,###,###.00")
 
+    // Print info to user
     println("\nName: " + user.customerName)
     println("Phone number: " + user.customerPhone)
     println("Address: " + user.customerAddress)
@@ -46,7 +49,7 @@ fun residentialWork(user: Residential) {
     }
 
 }
-
+// Commercial class for adding on to customer class
 class Commercial(propertyName: String,
                  customerName: String,
                  customerPhone: String,
@@ -61,14 +64,19 @@ class Commercial(propertyName: String,
 
 }
 
+// Function to calculate weekly cost to mow their lawn based on square footage
+// Also gets the total square footage if they have more than 1 property to be mowed
 fun commercialWork(user: Commercial){
     val roundTwoDigits = DecimalFormat ("$###,###,###,###.00")
     var totalProperties = 1
 
+    // Ask if there are more properties
     println("Do you have multiple properties to be mowed?")
     println("1. Yes")
     println("2. No")
     val userInput = readLine()!!.toInt()
+
+    // If there are more properties ask how many and loop for that number of times creating a rolling total of the square footage
     if (userInput == 1){
         var rollingTotal = 0.0
         println("How many more properties do you want to be mowed")
@@ -84,6 +92,8 @@ fun commercialWork(user: Commercial){
         user.squareFootage += rollingTotal
 
     }
+
+    // Print info to user
     println("\nName: " + user.customerName)
     println("Phone number: " + user.customerPhone)
     println("Address: " + user.customerAddress)

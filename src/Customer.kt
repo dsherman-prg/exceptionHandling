@@ -1,3 +1,62 @@
+/**
+ * Class Customer
+ * @author David Sherman
+ * date: 10/18/2021
+ * @param
+ * customerName This describes the name of the customer
+ * customerPhone This describes the phone number of the customer
+ * customerAddress This describes the address of the customer
+ * squareFootage This describes the square footage of the customer's property
+ *
+ * modifications
+ * DS 10/18/21 added comments
+ * -------------------------------------------------------------------------------------
+ * class Residential
+ * @author David Sherman
+ * date: 10/18/2021
+ * @param
+ * customerName This describes the name of the customer
+ * customerPhone This describes the phone number of the customer
+ * customerAddress This describes the address of the customer
+ * squareFootage This describes the square footage of the customer's property
+ * seniorStatus This describes the senior status of the customer
+ *
+ * modifications
+ * DS 10/18/21 added comments
+ * -------------------------------------------------------------------------------------
+ * class Commercial
+ * @author David Sherman
+ * date: 10/18/2021
+ * @param
+ * customerName This describes the name of the customer
+ * customerPhone This describes the phone number of the customer
+ * customerAddress This describes the address of the customer
+ * squareFootage This describes the square footage of the customer's property
+ * propertyName This describes the name of the customer's property
+ *
+ * modifications
+ * DS 10/18/21 added comments
+ * -------------------------------------------------------------------------------------
+ * function residentialWork
+ * @author David Sherman
+ * date: 10/18/2021
+ * @param
+ * roundTwoDigits This formats dollar amounts into proper format with 2 digit rounding
+ *
+ * modifications
+ * DS 10/18/21 added comments
+ * -------------------------------------------------------------------------------------
+ * function commercialWork
+ * @author David Sherman
+ * date: 10/18/2021
+ * @param
+ * roundTwoDigits This formats dollar amounts into proper format with 2 digit rounding
+ * This function asks if there are more properties to be mowed and calculates the weekly cost for the customer
+ * based on inputted information
+ *
+ * modifications
+ * DS 10/18/21 added comments
+ */
 import java.text.DecimalFormat
 // Base customer class for formatting user info
 open class Customer (customerName: String,
@@ -32,6 +91,22 @@ class Residential(seniorStatus: Int,
 
 }
 
+
+// Commercial class for adding on to customer class
+class Commercial(propertyName: String,
+                 customerName: String,
+                 customerPhone: String,
+                 customerAddress: String,
+                 squareFootage: Double): Customer(customerName,customerPhone,customerAddress,squareFootage) {
+
+    var propertyName: String = ""
+
+    init {
+        this.propertyName = propertyName
+    }
+
+}
+
 // Function to calculate weekly cost to mow their lawn based on square footage
 fun residentialWork(user: Residential) {
     val roundTwoDigits = DecimalFormat ("$###,###,###,###.00")
@@ -46,20 +121,6 @@ fun residentialWork(user: Residential) {
         println("The weekly charge will be: "+ (roundTwoDigits.format(((user.squareFootage/1000)*6.00)*.85)))
     }else{
         println("The weekly charge will be: "+ (roundTwoDigits.format(((user.squareFootage/1000)*6.00))))
-    }
-
-}
-// Commercial class for adding on to customer class
-class Commercial(propertyName: String,
-                 customerName: String,
-                 customerPhone: String,
-                 customerAddress: String,
-                 squareFootage: Double): Customer(customerName,customerPhone,customerAddress,squareFootage) {
-
-    var propertyName: String = ""
-
-    init {
-        this.propertyName = propertyName
     }
 
 }

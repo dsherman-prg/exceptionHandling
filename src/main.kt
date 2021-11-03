@@ -1,3 +1,5 @@
+import kotlin.NumberFormatException
+
 /**
  * Class main
  * @author David Sherman
@@ -13,6 +15,8 @@
  *
  * modifications
  * DS 10/18/21 added comments
+ * DS 10/25/21 added exception handling
+ * DS 10/25/21 fixed the do while loop
  */
 fun main() {
 
@@ -22,15 +26,28 @@ fun main() {
     var userAddress: String
     var userSquareFootage: Double
     var seniorStatus: Int
+    var userType: Int = 1
 
     // Get user to select if they are a business or residential
+    /*DS MOD 10/25/21*/
     do {
         println("Please select what kind of lawn maintenance you require:")
         println("1. Residential")
         println("2. Commercial")
         println("3. Done")
-        val userType = readLine()!!.toInt()
+        /*DS MOD 10/25/21*/
+        try {
+            userType = readLine()!!.toInt()
 
+        } catch (e: NumberFormatException) {
+            println("Error: Invalid information entered")
+        }
+        if (userType !in (1..3)){
+            println("Error: Please enter a valid selection")
+        }
+    } while (userType !in (1..3))
+
+    if (userType in (1..2)){
         // Get base user info
         println("Please enter your name.")
         userName = readLine().toString()
@@ -41,23 +58,29 @@ fun main() {
         println("Please enter the square footage of your yard.")
         userSquareFootage = readLine()!!.toDouble()
 
-        if (userType == 1){
+        if (userType == 1) {
             // If residential ask final question and pass info to residential function
             println("Are you a senior?")
             println("1. Yes")
             println("2. No")
-            seniorStatus = readLine()!!.toInt()
-            val user = Residential(seniorStatus, userName, userPhone, userAddress, userSquareFootage)
-            residentialWork(user)
-
-        }else if (userType == 2){
+            /*DS MOD 10/25/21*/
+            try {
+                seniorStatus = readLine()!!.toInt()
+                val user = Residential(seniorStatus, userName, userPhone, userAddress, userSquareFootage)
+                residentialWork(user)
+            }catch (e: NumberFormatException){
+                println("Error: Invalid Information Entered")
+            }
+        } else if (userType == 2) {
             // If commercial ask final question and pass info to commercial function
             println("Please enter the name of your property.")
-            val userPropertyName = readLine().toString()
+
+                val userPropertyName = readLine().toString()
+                println("Error: Invalid Information Entered")
+
             val user = Commercial(userPropertyName, userName, userPhone, userAddress, userSquareFootage)
             commercialWork(user)
         }
-    // Loop if they entered an invalid selection
-    }while (userType !in (1..3))
+    }
 }
 

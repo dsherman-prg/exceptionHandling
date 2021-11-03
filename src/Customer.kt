@@ -56,7 +56,9 @@
  *
  * modifications
  * DS 10/18/21 added comments
+ * DS 10/25/21 added exception handling
  */
+import java.lang.NumberFormatException
 import java.text.DecimalFormat
 // Base customer class for formatting user info
 open class Customer (customerName: String,
@@ -130,22 +132,39 @@ fun residentialWork(user: Residential) {
 fun commercialWork(user: Commercial){
     val roundTwoDigits = DecimalFormat ("$###,###,###,###.00")
     var totalProperties = 1
+    var userInput = 0
+    var moreProperties = 0
+    var footage: Double = 0.0
 
     // Ask if there are more properties
     println("Do you have multiple properties to be mowed?")
     println("1. Yes")
     println("2. No")
-    val userInput = readLine()!!.toInt()
+
+    /*DS MOD 10/25/21*/
+    try {
+    userInput = readLine()!!.toInt()
+    }catch (e: NumberFormatException){println("Error: Invalid information entered")}
 
     // If there are more properties ask how many and loop for that number of times creating a rolling total of the square footage
     if (userInput == 1){
         var rollingTotal = 0.0
         println("How many more properties do you want to be mowed")
-        var moreProperties = readLine()!!.toInt()
-        totalProperties = moreProperties + 1
+
+        /*DS MOD 10/25/21*/
+        try{
+        moreProperties = readLine()!!.toInt()
+        }catch (e: NumberFormatException){println("Error: Invalid information entered")}
+
+    totalProperties = moreProperties + 1
         do {
             println("What is the square footage of the #$moreProperties property?")
-            val footage = readLine()!!.toDouble()
+
+            /*DS MOD 10/25/21*/
+            try{
+                footage = readLine()!!.toDouble()
+            }catch (e: NumberFormatException){println("Error: Invalid information entered")}
+
             rollingTotal += footage
             moreProperties -= 1
         }while (moreProperties != 0)
